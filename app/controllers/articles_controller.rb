@@ -11,7 +11,7 @@ class ArticlesController < ApplicationController
     # render plain: params[:article].inspect // Will just render the article in unstyled object in view.
     @article = Article.new(article_params)
     if @article.save
-      flash[:notice] = "Article was successfully created"
+      flash[:notice] = 'Article was successfully created'
       redirect_to article_path(@article)
     else
       render 'new'
@@ -22,6 +22,13 @@ class ArticlesController < ApplicationController
     @article = Article.find(params[:id]); 
   end
 
+  def destroy
+    @article = Article.find(params[:id]);
+    @article.destroy
+    flash[:notice] = 'Article was successfully deleted'
+    redirect_to articles_path
+  end
+
   def edit
     @article = Article.find(params[:id]);
   end
@@ -29,7 +36,7 @@ class ArticlesController < ApplicationController
   def update
     @article = Article.find(params[:id])
     if @article.update(article_params)
-      flash[:notice] = "Edit successfull"
+      flash[:notice] = 'Edit successfull'
       redirect_to article_path(@article)
     else
       render 'edit'
