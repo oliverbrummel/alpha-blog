@@ -4,10 +4,18 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    # render plain: params[:article].inspect
+    # render plain: params[:article].inspect // Will just render the article in unstyled object in view.
     @article = Article.new(article_params)
-    @article.save
-    redirect_to articles_show(@article)
+    if @article.save
+      flash[:notice] = "Article was successfully created"
+      redirect_to article_path(@article)
+    else
+      render 'new'
+    end
+  end
+
+  def show
+    @article = Article.find(params[:id]); 
   end
 
   private
